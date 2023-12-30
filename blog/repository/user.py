@@ -1,6 +1,6 @@
 from passlib.context import CryptContext
 from fastapi import status, HTTPException
-from .. import models
+from .. import models, token
 from sqlalchemy.orm import Session
 
 
@@ -33,4 +33,5 @@ def login(username: str, password: str, db:Session):
     if not verify_password(password, user.password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"wrong password")
 
-    return user
+    access_token = token.create_access_token(data={"sub": user.email})
+    return {"token": access_token, "type": "bearer"}

@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Union
 
 class Blog(BaseModel):
     # id: int
@@ -30,3 +30,5 @@ class ShowBlog(BaseModel):
     class Config():
         from_attributes = True
 
+class TokenData(BaseModel):
+    username: Union[str, None] = None

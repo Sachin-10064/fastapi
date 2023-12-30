@@ -7,7 +7,7 @@ from ..repository import user
 
 router = APIRouter(
     prefix="/user",
-    tags=["user"]
+    tags=["User"]
 )
 
 
@@ -16,6 +16,6 @@ async def registration(req: schema.User, db: Session = Depends(get_db)):
    return user.user_create(req, db)
 
 
-@router.get("/login", response_model=schema.ShowUser, status_code=200)
+@router.get("/login", status_code=200)
 async def login(username: str, password: str, db: Session = Depends(get_db)):
    return  user.login(username, password, db)

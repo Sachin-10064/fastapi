@@ -6,7 +6,7 @@ from ..repository import blog
 from sqlalchemy.orm import Session
 router = APIRouter(
     prefix="/blog",
-    tags=["blog"]
+    tags=["Blog"]
 )
 
 
