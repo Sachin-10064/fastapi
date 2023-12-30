@@ -14,6 +14,9 @@ def get_password_hash(password):
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
+def get_user(db: Session, username: str):
+    return db.query(models.User).filter(models.User.username == username).first()
+
 
 def user_create(req, db:Session):
     password = get_password_hash(req.password)
@@ -33,5 +36,5 @@ def login(username: str, password: str, db:Session):
     if not verify_password(password, user.password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"wrong password")
 
-    access_token = token.create_access_token(data={"sub": user.email})
-    return {"token": access_token, "type": "bearer"}
+    access_token = token.create_access_token(data={"sub": user.username})
+    return {"access_token": access_token, "token_type": "bearer"}
