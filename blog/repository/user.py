@@ -36,5 +36,11 @@ def login(username: str, password: str, db:Session):
     if not verify_password(password, user.password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"wrong password")
 
-    access_token = token.create_access_token(data={"sub": user.username})
+    dir ={
+        "sub": user.username,
+        "user_id": user.id,
+        "scopes": "admin",
+        "iss": "",
+    }
+    access_token = token.create_access_token(data=dir)
     return {"access_token": access_token, "token_type": "bearer"}

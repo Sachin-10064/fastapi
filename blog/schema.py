@@ -29,6 +29,7 @@ class ShowBlog(BaseModel):
 
 class TokenData(BaseModel):
     username: Union[str, None] = None
+    scopes: str
 
 class Token(BaseModel):
     access_token: str

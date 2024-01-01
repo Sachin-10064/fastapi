@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Security
 from typing import List
 from .. import schema, token
 from ..database import get_db
@@ -11,7 +11,8 @@ router = APIRouter(
 )
 
 db_dependency = Annotated[Session, Depends(get_db)]
-user_dependency = Annotated[schema.User, Depends(token.get_current_user)]
+# user_dependency = Annotated[schema.User, Depends(token.get_current_user)]
+user_dependency = Annotated[schema.User, Security(token.get_current_user, scopes=["admin"])]
 
 @router.get("/",  response_model=List[schema.ShowBlog])
 async def allblog(current_user: user_dependency, db: db_dependency):

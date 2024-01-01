@@ -19,4 +19,5 @@ async def registration(req: schema.User, db: db_dependency):
 
 @router.post("/login",  response_model=schema.Token)
 async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: db_dependency):
+    # print(form_data.scopes)
     return user.login(form_data.username, form_data.password, db)
